@@ -1,0 +1,4 @@
+train: /content/drive/MyDrive/train/images
+val: /content/drive/MyDrive/val/images
+nc: 1  # Number of classes
+names: ['solar_panel']

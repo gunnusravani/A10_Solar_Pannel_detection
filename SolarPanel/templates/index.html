@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./static/cs.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/20c5629a29.js" crossorigin="anonymous"></script>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white ">
+        <div class="container" style="display:flex; justify-content:space-between;">
+            <a class="navbar-brand" href="#">
+              <h1><span><img src="./static/solar-panel.png" width="40" height="40"></span> <span style="font-family: 'Poppins', sans-serif; font-size:36px; line-height:0px;"> Solar Panel Detector </span></h1>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ml-auto">
+                    <a class="nav-link " id="navitem1" href="#who"><b>WHO WE ARE </b><i class="fa fa-search" style="font-size:18px"></i> </a>&nbsp;
+                    <a class="nav-link" id="navitem2" href="#what"><b>WHAT WE DO </b><i class='fas fa-clipboard-list' style='font-size:18px'></i></a>&nbsp;&nbsp;
+                    <a class="nav-link" id="navitem3" href="#dp"><b>Follow Us </b><i class="fa fa-telegram" style="font-size:18px"></i></a>&nbsp;&nbsp;
+                    <a class="nav-link" id="navitem4" href="#faqs"><b>FAQ's </b><i class="fa fa-question-circle" style="font-size:18"></i></a>&nbsp;&nbsp;
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    
+
+
+
+
+
+    <div class="input-block"> 
+                                 
+      <div class="containeri col-12 col-md-6 col-lg-5 mb-3 shadow p-8" style="height: 40vh; width:80vw; border-radius: 35px;" >
+        <form action="/upload_text" method="post" enctype="multipart/form-data">
+          <label style="font-weight: bold; display: block; margin-bottom: 10px;" for="userInput">Address:</label>
+          <textarea placeholder="Give the address" id="userInput" name="userInput" rows="5" style="width: 100%; max-width: 400px;"></textarea>
+          <button class="custom-button mb-3" type="submit" style="width: 100%; max-width: 200px;">Get User Input</button>
+      </form>
+      
+      
+          <!-- <img src="./static/static_map_image1.jpg" alt="Static Map Image" onerror="this.style.display='none';"> -->
+
+      </div>
+
+  <!-- <div class="container col-5 col-md-5">    
+      
+      <form action="/upload_image" method="post" enctype="multipart/form-data">
+          <div class="img-area" data-img="">
+              <i class='bx bxs-cloud-upload icon'></i>
+              <h3>Upload Image</h3>
+              <p>Image size must be less than <span>2MB</span></p>
+          </div>
+          
+          <input class="select-image" type="file" name="image_file" accept="image/*" required>
+          
+          <button class="custom-button mb-3" type="submit">Upload Image</button>
+      </form>
+      
+</div> -->
+  <div class="container col-12 col-md-6 col-lg-6 mb-3  shadow p-8" style="align-items: center; justify-content: center; height: 75vh; border-radius: 35px;">
+      <div class="result-heading-bg" style="color:white; background-color: #5ca1f0; border-radius: 20px; ">
+          <h2 class="text-center mb-4">Result</h2>
+      </div>
+      
+        
+    </div>
+    
+  
+  </div>
+ </div>
+  
+    
+<div id="who" class="info" style="margin-bottom: 20px;">
+  <h1 style="text-align: center;">WHO WE ARE</h1>
+  <div class="content">
+    <p>We specialize in developing innovative solutions that utilize machine learning algorithms to analyze vast amounts of satellite imagery data. Our focus is on identifying and monitoring environmental features such as vegetation cover, land use patterns, and water resources. By harnessing the power of artificial intelligence, we can provide valuable insights into ecosystem health, biodiversity, and climate change trends.
+      <br>
+      Our team is comprised of experts in computer vision, data science, and environmental science, allowing us to tackle complex challenges with interdisciplinary approaches. We continuously strive to enhance our models and algorithms to achieve higher accuracy and efficiency in environmental monitoring and analysis.
+      <br>
+      In addition to our core expertise in machine learning and satellite imagery analysis, we also collaborate with stakeholders across various sectors, including government agencies, non-profit organizations, and private enterprises. Through these collaborations, we aim to foster knowledge sharing, facilitate data-driven decision-making, and drive collective action towards a more sustainable future.
+      <br>
+      We are passionate about using technology as a force for good and are dedicated to creating impactful solutions that contribute to the preservation of our planet for future generations. Our mission is to empower individuals and organizations with the tools and insights they need to make informed decisions and take proactive measures to address environmental challenges.</p>
+  </div>
+</div>
+<div id="what" class="info">
+  <h1 style="text-align: center;">WHAT WE DO</h1>
+  <div class="content">
+    <p>At our core, we excel in pioneering advanced solutions tailored specifically for solar panel detection and monitoring, employing cutting-edge machine learning algorithms in tandem with satellite imagery analysis. Leveraging the wealth of data available through satellite imagery, we achieve pinpoint accuracy and unparalleled efficiency in identifying solar panels across diverse geographic locations. Our primary objective is to equip governments, organizations, and individuals with actionable insights that optimize the utilization of solar energy resources, drive widespread adoption of renewable energy technologies, and foster a more environmentally sustainable future.</p>
+  </div>
+</div>
+   <div id="faqs" class="wrapper">
+     <h1>Frequently Asked Questions</h1>
+
+    <div class="faq">
+      <button class="accordion">
+         What is solar panel detection?
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="pannel">
+        <p>
+            Solar panel detection refers to the process of identifying and locating solar panels in satellite images or photographs using machine learning algorithms. This technology enables us to analyze vast amounts of imagery data to accurately detect the presence of solar panels on rooftops, fields, or other surfaces.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <button class="accordion">
+        Why is solar panel detection important?
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="pannel">
+        <p>
+            Solar panel detection plays a crucial role in renewable energy monitoring, urban planning, and environmental sustainability. By accurately identifying the locations of solar panels, we can assess solar energy potential, monitor installation trends, and optimize energy infrastructure planning for maximum efficiency and impact.
+
+        </p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <button class="accordion">
+        How does solar panel detection work?
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="pannel">
+        <p>
+            Solar panel detection involves training machine learning models, such as convolutional neural networks (CNNs), on annotated datasets of satellite images containing solar panels. These models learn to recognize patterns and features indicative of solar panels, allowing them to accurately identify and localize solar panels in new images.
+
+        </p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <button class="accordion">
+        What are the benefits of solar panel detection?
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="pannel">
+        <p>
+            The benefits of solar panel detection include improved renewable energy planning and deployment, enhanced monitoring of solar energy production, identification of suitable locations for solar installations, and support for policy-making and decision-making processes related to sustainable energy development.
+
+        </p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <button class="accordion">
+        Can solar panel detection be applied to other areas?
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="pannel">
+        <p>
+            Yes, the technology and methodologies used for solar panel detection can be adapted and applied to various other domains, including infrastructure monitoring, agricultural analysis, disaster response, and urban development planning. The ability to analyze satellite imagery and detect specific features opens up a wide range of applications beyond renewable energy.
+
+        </p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <button class="accordion">
+        Is solar panel detection accurate in all types of weather conditions?
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="pannel">
+        <p>
+            Solar panel detection algorithms are designed to perform well under various weather conditions, including sunny, cloudy, and overcast skies. However, extreme weather conditions such as heavy rain or snow may affect the accuracy of detection temporarily.
+
+        </p>
+      </div>
+    </div>
+
+    <div class="faq">
+        <button class="accordion">
+            Can solar panel detection identify the efficiency or type of solar panels?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            While solar panel detection primarily focuses on identifying the presence and location of solar panels, additional analysis techniques can be applied to assess factors such as panel efficiency, orientation, and type. These analyses may require additional data and modeling beyond basic detection algorithms.
+ 
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+            What are the limitations of solar panel detection technology?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            Like any technology, solar panel detection has its limitations. Factors such as image resolution, quality, and occlusions (e.g., shadows, foliage) can impact detection accuracy. Additionally, the detection of small or poorly visible solar panels may pose challenges for automated algorithms.
+
+          </p>
+        </div>
+      </div>
+
+
+      <div class="faq">
+        <button class="accordion">
+            Can solar panel detection help with solar energy optimization?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            Yes, solar panel detection can play a crucial role in optimizing solar energy usage and distribution. By accurately identifying the locations of solar panels, energy providers and grid operators can better integrate solar energy into the power grid, manage energy demand, and improve overall energy efficiency.
+
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+            Is solar panel detection used for regulatory compliance or enforcement purposes?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            Solar panel detection technology can assist regulatory authorities in monitoring compliance with solar energy regulations, such as building codes and zoning laws. By identifying unauthorized or unpermitted solar installations, authorities can ensure adherence to regulations and promote safe and responsible deployment of solar energy infrastructure. 
+          </p>
+        </div>
+      </div>
+  </div>
+
+  <script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        this.parentElement.classList.toggle("active");
+
+        var pannel = this.nextElementSibling;
+
+        if (pannel.style.display === "block") {
+          pannel.style.display = "none";
+        } else {
+          pannel.style.display = "block";
+        }
+      });
+    }
+
+    const selectImage = document.querySelector('.select-image');
+const inputFile = document.querySelector('#file');
+const imgArea = document.querySelector('.img-area');
+
+selectImage.addEventListener('click', function () {
+  inputFile.click();
+})
+
+inputFile.addEventListener('change', function () {
+  const image = this.files[0]
+  if(image.size < 2000000) {
+    const reader = new FileReader();
+    reader.onload = ()=> {
+      const allImg = imgArea.querySelectorAll('img');
+      allImg.forEach(item=> item.remove());
+      const imgUrl = reader.result;
+      const img = document.createElement('img');
+      img.src = imgUrl;
+      imgArea.appendChild(img);
+      imgArea.classList.add('active');
+      imgArea.dataset.img = image.name;
+    }
+    reader.readAsDataURL(image);
+  } else {
+    alert("Image size more than 2MB");
+  }
+})
+
+  </script>
+</body>
+
+</html>
