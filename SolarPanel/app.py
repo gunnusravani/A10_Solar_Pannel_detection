@@ -60,6 +60,22 @@ async def upload_text(request: Request,userInput: str = Form(...)):
         print("Longitude:", longitude)
     else:
         print("Failed to retrieve latitude and longitude.")
+    
+    def get_weather(latitude, longitude, api_key):
+        url = f"http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={api_key}"
+        response = requests.get(url)
+        data = response.json()
+        if response.status_code == 200:
+            weather = data['weather'][0]['description']
+            temperature = data['main']['temp']
+            return temperature
+        else:
+            return "Error fetching data"
+    
+    api_key = 'bd5e378503939ddaee76f12ad7a97608'  # Replace with your OpenWeatherMap API key
+
+    result = get_weather(latitude, longitude, api_key)
+    print(result)
 
     def fetch_static_map(latitude, longitude, api_key):
         base_url = "https://maps.googleapis.com/maps/api/staticmap"
@@ -95,12 +111,18 @@ async def upload_text(request: Request,userInput: str = Form(...)):
     # # count occurrences of 'solar_panel'
     # word_to_count = 'solar_panel'
     # predictions = sum(1 for _, text, _ in text_ if word_to_count in text.lower())
-
-      
+    res=""
+    if rpred==0:
+        if result<288:
+            res="No suitable conditions to install a solar panel"
+        else:
+            res="Solar panel can be installed"             
          
     context = {
         "request": request,
-        "predictions" : rpred
+        "predictions" : rpred,
+        "result": res,
+        "user_input":userInput
     }
     return templates.TemplateResponse("result.html", context)
 

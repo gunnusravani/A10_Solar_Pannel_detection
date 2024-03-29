@@ -32,7 +32,6 @@
                 <div class="navbar-nav ml-auto">
                     <a class="nav-link " id="navitem1" href="#who"><b>WHO WE ARE </b><i class="fa fa-search" style="font-size:18px"></i> </a>&nbsp;
                     <a class="nav-link" id="navitem2" href="#what"><b>WHAT WE DO </b><i class='fas fa-clipboard-list' style='font-size:18px'></i></a>&nbsp;&nbsp;
-                    <a class="nav-link" id="navitem3" href="#dp"><b>Follow Us </b><i class="fa fa-telegram" style="font-size:18px"></i></a>&nbsp;&nbsp;
                     <a class="nav-link" id="navitem4" href="#faqs"><b>FAQ's </b><i class="fa fa-question-circle" style="font-size:18"></i></a>&nbsp;&nbsp;
                 </div>
             </div>
@@ -47,18 +46,37 @@
 
     <div class="input-block"> 
                                  
-        <div class="containeri col-12 col-md-6 col-lg-5 mb-3 shadow p-8" style="height: 40vh; width:80vw; border-radius: 35px;" >
+      <div class="leftb col-12 col-md-6 col-lg-5 mb-3 ">
+        <div class="containeri shadow p-8" style="min-height: 26vh;  border-radius: 35px; margin-bottom: 20px;" >
           <form action="/upload_text" method="post" enctype="multipart/form-data">
             <label style="font-weight: bold; display: block; margin-bottom: 10px;" for="userInput">Address:</label>
-            <textarea placeholder="Give the address" id="userInput" name="userInput" rows="5" style="width: 100%; max-width: 400px;"></textarea>
+            <textarea placeholder="Give the address" id="userInput" name="userInput"  rows="4" style="width: 100%; max-width: 400px;">{{user_input}}</textarea>
             <button class="custom-button mb-3" type="submit" style="width: 100%; max-width: 200px;">Get User Input</button>
         </form>
         
         
             <!-- <img src="./static/static_map_image1.jpg" alt="Static Map Image" onerror="this.style.display='none';"> -->
-
-        </div>
-
+  
+        
+          
+          </div>
+          <div class="containeri shadow p-8" style="min-height: 26vh;  border-radius: 35px; margin-bottom: 20px; text-align: center; align-items: center; justify-content: center;" >
+            {% if result!="" %}
+              <h3>Analyzing Solar Panel Feasibility Considering Local Conditions</h3>
+              {% if result=="No suitable conditions to install a solar panel." %} 
+              <h3 style="color: red; margin-top:4vh"> {{result}}</h3>
+              {% endif %}
+              {% if result=="Solar panel can be installed." %} 
+              <h3 style="color: green; margin-top:4vh"> {{result}}</h3>
+              {% endif %}
+            {% endif %}   
+            {% if result=="" %} 
+            <h3>Analyzing Solar Panel Feasibility Considering Local Conditions</h3>
+            <h3  style="color: green; margin-top:4vh">Solar panel is already installed.</h3>
+            {% endif %}
+            </div>
+      
+      </div>
     <!-- <div class="container col-5 col-md-5">    
         
         <form action="/upload_image" method="post" enctype="multipart/form-data">
@@ -106,11 +124,12 @@
     </div>
    </div>
     
+    
 <div id="who" class="info" style="margin-bottom: 20px;">
   <h1 style="text-align: center;">WHO WE ARE</h1>
   <div class="content">
     <p style="margin-bottom: 20px;">We specialize in developing innovative solutions that utilize machine learning algorithms to analyze vast amounts of satellite imagery data. Our focus is on identifying and monitoring environmental features such as vegetation cover, land use patterns, and water resources. By harnessing the power of artificial intelligence, we can provide valuable insights into ecosystem health, biodiversity, and climate change trends.
-    </p><br><br>
+    </p>
       <p>Our team is comprised of experts in computer vision, data science, and environmental science, allowing us to tackle complex challenges with interdisciplinary approaches. We continuously strive to enhance our models and algorithms to achieve higher accuracy and efficiency in environmental monitoring and analysis.
     </p>
       <p>In addition to our core expertise in machine learning and satellite imagery analysis, we also collaborate with stakeholders across various sectors, including government agencies, non-profit organizations, and private enterprises. Through these collaborations, we aim to foster knowledge sharing, facilitate data-driven decision-making, and drive collective action towards a more sustainable future.
