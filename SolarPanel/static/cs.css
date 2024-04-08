@@ -271,3 +271,14 @@ body {
   .info .content p{
     margin-bottom: 20px;
   }
+
+  ::-webkit-input-placeholder { /* WebKit browsers */
+    font-size: 20px; /* Adjust the size as needed */
+    font-weight: bold;
+}
+
+.alert
+{
+    font-size: 25px;
+    color: red;
+}

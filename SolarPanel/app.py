@@ -36,6 +36,7 @@ async def upload_text(request: Request,userInput: str = Form(...)):
         }
         response = requests.get(base_url, params=params)
         data = response.json()
+        print(data)
         if data['status'] == 'OK':
             results = data['results'][0]
             location = results['geometry']['location']
@@ -43,8 +44,9 @@ async def upload_text(request: Request,userInput: str = Form(...)):
             longitude = location['lng']
             return latitude, longitude
         else:
+            error_message="Please Enter the valid address"
             print("Error:", data['status'])
-            return None, None
+            return None,None
 
     # Ask the user to enter the location
     location = userInput
@@ -59,7 +61,13 @@ async def upload_text(request: Request,userInput: str = Form(...)):
         print("Latitude:", latitude)
         print("Longitude:", longitude)
     else:
+        error_message="Please Enter the valid address"
+        context={
+            "request":request,
+            "error_msg":error_message
+        }
         print("Failed to retrieve latitude and longitude.")
+        return templates.TemplateResponse("index.html",context)
     
     def get_weather(latitude, longitude, api_key):
         url = f"http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={api_key}"

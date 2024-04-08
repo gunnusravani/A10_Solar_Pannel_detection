@@ -16,6 +16,18 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
+  <style>
+    /* Disable the arrows for the input field */
+    input[type="text"]::-webkit-outer-spin-button,
+    input[type="text"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type="text"] {
+        -moz-appearance: textfield; /* Firefox */
+    }
+</style>
 </head>
 
 <body>
@@ -50,7 +62,7 @@
         <div class="containeri shadow p-8" style="min-height: 26vh;  border-radius: 35px; margin-bottom: 20px;" >
           <form action="/upload_text" method="post" enctype="multipart/form-data">
             <label style="font-weight: bold; display: block; margin-bottom: 10px;" for="userInput">Address:</label>
-            <textarea placeholder="Give the address" id="userInput" name="userInput"  rows="4" style="width: 100%; max-width: 400px;">{{user_input}}</textarea>
+            <textarea placeholder="Enter the address (Street, City, State, Postal Code, Country)" id="userInput" name="userInput" rows="5" style="width: 100%;font-size:16px; max-width: 550px;"></textarea>
             <button class="custom-button mb-3" type="submit" style="width: 100%; max-width: 200px;">Get User Input</button>
         </form>
         
@@ -322,6 +334,11 @@ inputFile.addEventListener('change', function () {
     alert("Image size more than 2MB");
   }
 })
+
+history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, document.URL);
+        });
 
   </script>
 </body>
