@@ -346,6 +346,19 @@ inputFile.addEventListener('change', function () {
   setTimeout("disableBack()", 0);
   window.onunload = function () { null };
   </script>
+  <script>
+    window.onload = function() {
+        window.addEventListener("popstate", function(event) {
+            // Prevent the default behavior
+            event.preventDefault();
+            // Optionally, you can handle the back navigation here
+            // For example, you can perform some action or show a confirmation dialog
+            // Then, if necessary, you can manually navigate to a different URL
+            // window.location.href = "desired-url";
+        });
+    };
+</script>
+
 </body>
 
 </html>
