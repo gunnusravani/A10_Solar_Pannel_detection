@@ -122,9 +122,9 @@ async def upload_text(request: Request,userInput: str = Form(...)):
     res=""
     if rpred==0:
         if result<288:
-            res="No suitable conditions to install a solar panel"
+            res="No suitable conditions to install a solar panel."
         else:
-            res="Solar panel can be installed"             
+            res="Solar panel can be installed."             
          
     context = {
         "request": request,
