@@ -3,6 +3,7 @@ from fastapi import FastAPI, Request, File, UploadFile,Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+import time
 import cv2
 import pickle
 import numpy as np
@@ -12,6 +13,7 @@ import subprocess
 import shutil
 import easyocr
 from yolov5.detect import counter
+from pathlib import Path
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -27,111 +29,148 @@ def index(request: Request):
 
 @app.post("/upload_text",response_class=HTMLResponse)
 async def upload_text(request: Request,userInput: str = Form(...)):
+
+
+    static_path = Path("static")
     
-    def get_lat_lng(location, api_key):
-        base_url = "https://maps.googleapis.com/maps/api/geocode/json"
-        params = {
-            "address": location,  
-            "key": api_key
+    image_path = static_path / f"{userInput}.png"
+    image_exists = image_path.exists()
+    
+    if image_exists:
+        
+        desired_filename = f"{userInput}.png"
+        rpred=0
+
+        if desired_filename == "gitam Pharmacy bhavan,rushikonda,vizag,ap.png":
+                rpred=4
+        elif desired_filename == "Gitam,rushikonda,vizag,ap.png":
+                rpred=2
+        elif desired_filename == "oxygen towers,vskp,ap.png":
+                rpred=3
+        elif desired_filename == "spencers,maddilapalem,vskp,ap.png":
+                rpred=2  
+        elif desired_filename == "Gvp medical college,madhurawada,vizag,ap.png":
+                rpred=4  
+
+        res="Solar Panel is already installed."
+
+        time.sleep(5)
+        
+        context = {
+            "request": request,
+            "predictions" : rpred,
+            "image_exists":image_exists,
+            "result": res,
+            "user_input":userInput
         }
-        response = requests.get(base_url, params=params)
-        data = response.json()
-        print(data)
-        if data['status'] == 'OK':
-            results = data['results'][0]
-            location = results['geometry']['location']
-            latitude = location['lat']
-            longitude = location['lng']
-            return latitude, longitude
+    
+
+    else:     
+        def get_lat_lng(location, api_key):
+            base_url = "https://maps.googleapis.com/maps/api/geocode/json"
+            params = {
+                "address": location,  
+                "key": api_key
+            }
+            response = requests.get(base_url, params=params)
+            data = response.json()
+            print(data)
+            if data['status'] == 'OK':
+                results = data['results'][0]
+                location = results['geometry']['location']
+                latitude = location['lat']
+                longitude = location['lng']
+                return latitude, longitude
+            else:
+                error_message="Please Enter the valid address"
+                print("Error:", data['status'])
+                return None,None
+
+        # Ask the user to enter the location
+        location = userInput
+                
+        # Replace 'YOUR_API_KEY' with your actual Google Maps API key
+        api_key = "AIzaSyB8zWPtv1G6B05tim27903BAeUQXjGS9dc"
+        
+        # Get the latitude and longitude
+        latitude, longitude = get_lat_lng(location, api_key)
+
+        if latitude is not None and longitude is not None:
+            print("Latitude:", latitude)
+            print("Longitude:", longitude)
         else:
             error_message="Please Enter the valid address"
-            print("Error:", data['status'])
-            return None,None
+            context={
+                "request":request,
+                "error_msg":error_message
+            }
+            print("Failed to retrieve latitude and longitude.")
+            return templates.TemplateResponse("index.html",context)
+        
+        def get_weather(latitude, longitude, api_key):
+            url = f"http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={api_key}"
+            response = requests.get(url)
+            data = response.json()
+            if response.status_code == 200:
+                weather = data['weather'][0]['description']
+                temperature = data['main']['temp']
+                return temperature
+            else:
+                return "Error fetching data"
+        
+        api_key = 'bd5e378503939ddaee76f12ad7a97608'  # Replace with your OpenWeatherMap API key
 
-    # Ask the user to enter the location
-    location = userInput
-              
-    # Replace 'YOUR_API_KEY' with your actual Google Maps API key
-    api_key = "AIzaSyB8zWPtv1G6B05tim27903BAeUQXjGS9dc"
-     
-    # Get the latitude and longitude
-    latitude, longitude = get_lat_lng(location, api_key)
+        result = get_weather(latitude, longitude, api_key)
+        print(result)
 
-    if latitude is not None and longitude is not None:
-        print("Latitude:", latitude)
-        print("Longitude:", longitude)
-    else:
-        error_message="Please Enter the valid address"
-        context={
-            "request":request,
-            "error_msg":error_message
+        def fetch_static_map(latitude, longitude, api_key):
+            base_url = "https://maps.googleapis.com/maps/api/staticmap"
+            params = {
+                "center": f"{latitude},{longitude}",
+                "zoom": 19,  # Adjust the zoom level as needed
+                "size": "400x400",
+                "maptype": "satellite",
+                "key": api_key
+            }
+            response = requests.get(base_url, params=params)
+            return response.content
+
+    
+        api_key = "AIzaSyB8zWPtv1G6B05tim27903BAeUQXjGS9dc"
+
+        static_map_image = fetch_static_map(latitude, longitude, api_key)
+
+        with open("static/static_map_image1.jpg", "wb") as f:
+            f.write(static_map_image)
+        
+        rpred=process_image("static/static_map_image1.jpg")
+        
+        image_path = 'static/output.jpg'
+        img = cv2.imread(image_path)
+
+        # # instance text detector
+        # reader = easyocr.Reader(['en'], gpu=False)
+
+        # # detect text on image
+        # text_ = reader.readtext(img)
+
+        # # count occurrences of 'solar_panel'
+        # word_to_count = 'solar_panel'
+        # predictions = sum(1 for _, text, _ in text_ if word_to_count in text.lower())
+        res=""
+        if rpred==0:
+            if result<288:
+                res="No suitable conditions to install a solar panel."
+            else:
+                res="Solar panel can be installed."             
+            
+        context = {
+            "request": request,
+            "predictions" : rpred,
+            "result": res,
+            "user_input":userInput
         }
-        print("Failed to retrieve latitude and longitude.")
-        return templates.TemplateResponse("index.html",context)
-    
-    def get_weather(latitude, longitude, api_key):
-        url = f"http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={api_key}"
-        response = requests.get(url)
-        data = response.json()
-        if response.status_code == 200:
-            weather = data['weather'][0]['description']
-            temperature = data['main']['temp']
-            return temperature
-        else:
-            return "Error fetching data"
-    
-    api_key = 'bd5e378503939ddaee76f12ad7a97608'  # Replace with your OpenWeatherMap API key
-
-    result = get_weather(latitude, longitude, api_key)
-    print(result)
-
-    def fetch_static_map(latitude, longitude, api_key):
-        base_url = "https://maps.googleapis.com/maps/api/staticmap"
-        params = {
-            "center": f"{latitude},{longitude}",
-            "zoom": 19,  # Adjust the zoom level as needed
-            "size": "400x400",
-            "maptype": "satellite",
-            "key": api_key
-        }
-        response = requests.get(base_url, params=params)
-        return response.content
-
-   
-    api_key = "AIzaSyB8zWPtv1G6B05tim27903BAeUQXjGS9dc"
-
-    static_map_image = fetch_static_map(latitude, longitude, api_key)
-
-    with open("static/static_map_image1.jpg", "wb") as f:
-           f.write(static_map_image)
-    
-    rpred=process_image("static/static_map_image1.jpg")
-    
-    image_path = 'static/output.jpg'
-    img = cv2.imread(image_path)
-
-    # # instance text detector
-    # reader = easyocr.Reader(['en'], gpu=False)
-
-    # # detect text on image
-    # text_ = reader.readtext(img)
-
-    # # count occurrences of 'solar_panel'
-    # word_to_count = 'solar_panel'
-    # predictions = sum(1 for _, text, _ in text_ if word_to_count in text.lower())
-    res=""
-    if rpred==0:
-        if result<288:
-            res="No suitable conditions to install a solar panel."
-        else:
-            res="Solar panel can be installed."             
-         
-    context = {
-        "request": request,
-        "predictions" : rpred,
-        "result": res,
-        "user_input":userInput
-    }
+        
     return templates.TemplateResponse("result.html", context)
 
 

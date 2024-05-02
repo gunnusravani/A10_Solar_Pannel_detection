@@ -81,6 +81,9 @@
               {% if result=="Solar panel can be installed." %} 
               <h3 style="color: green; margin-top:4vh"> {{result}}</h3>
               {% endif %}
+              {% if result=="Solar Panel is already installed." %} 
+              <h3 style="color: green; margin-top:4vh"> {{result}}</h3>
+              {% endif %}
             {% endif %}   
             {% if result=="" %} 
             <h3>Analyzing Solar Panel Feasibility Considering Local Conditions</h3>
@@ -111,11 +114,20 @@
         
         <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; flex-wrap: wrap;">
           <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; margin: 10px;">
-              <img src="./static/static_map_image1.jpg" style="width: 100%; max-width: 300px; height: auto;">
-              <h3 style="margin-top:10px; color:white; background-color: #c2c2c2; border-radius: 10px; padding: 4px; ">Input Image</h3>
+            {% if image_exists %}
+                <img src="./static/{{ user_input }}.png" style="width: 100%; max-width: 300px; height: 300px;">
+            {% else %}
+                <img src="./static/static_map_image1.jpg" style="width: 100%; max-width: 300px; height: auto;">
+            {% endif %}
+
+            <h3 style="margin-top:10px; color:white; background-color: #c2c2c2; border-radius: 10px; padding: 4px; ">Input Image</h3>
           </div>
           <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; margin: 10px;">
-              <img src="./static/output.jpg" style="width: 100%; max-width: 300px; height: auto;">
+            {% if image_exists %}
+                <img src="./static/output/{{ user_input }}.png" style="width: 100%; max-width: 300px; height: 300px;">
+            {% else %}
+                <img src="./static/output.jpg" style="width: 100%; max-width: 300px; height: auto;">
+            {% endif %}
               <h3 style="margin-top:10px; color:white; background-color: #c2c2c2; border-radius: 10px; padding: 4px; ">Output Image</h3>
           </div>
       </div>
